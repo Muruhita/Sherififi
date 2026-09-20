@@ -12,12 +12,6 @@ export default function Layout({ children, title, user }) {
       <div className="bg-grid" />
       <div className="bg-glow" />
 
-      {/* CRT-эффекты */}
-      <div className="crt-scanlines" />
-      <div className="crt-vignette" />
-      <div className="crt-flicker" />
-      <div className="crt-sweep" />
-
       <div className="app-shell">
         <main className="app-main" key={title}>{children}</main>
         <Sidebar user={user} />
