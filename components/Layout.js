@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Sidebar from './Sidebar';
 
-export default function Layout({ children, title }) {
+export default function Layout({ children, title, user }) {
   return (
     <>
       <Head>
@@ -15,7 +15,7 @@ export default function Layout({ children, title }) {
 
       <div className="app-shell">
         <main className="app-main" key={title}>{children}</main>
-        <Sidebar />
+        <Sidebar user={user} />
       </div>
     </>
   );
