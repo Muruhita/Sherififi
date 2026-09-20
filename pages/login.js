@@ -53,10 +53,6 @@ export default function LoginPage({ error }) {
 
       <div className="bg-grid" />
       <div className="bg-glow" />
-      <div className="crt-scanlines" />
-      <div className="crt-vignette" />
-      <div className="crt-flicker" />
-      <div className="crt-sweep" />
 
       <div className="login-shell">
         <div className="login-visual">
