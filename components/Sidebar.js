@@ -3,20 +3,21 @@ import { useRouter } from 'next/router';
 import { getAvatarUrl } from '@/lib/session';
 
 const NAV = [
-  { href: '/',        label: 'Главная', icon: '⌂' },
-  { href: '/profile', label: 'Профиль', icon: '◉' },
-  { href: '/forms',   label: 'Формы',   icon: '✎' },
+  { href: '/',        label: 'Home',    icon: '⌂' },
+  { href: '/profile', label: 'Profile', icon: '◉' },
+  { href: '/forms',   label: 'Forms',   icon: '✎' },
 ];
 
 function Badge() {
+  // Ретро-значок: та же форма, но приглушённые цвета терминала
   return (
     <svg viewBox="0 0 100 100">
       <polygon points="50,4 92,26 92,74 50,96 8,74 8,26"
-               fill="#0f2447" stroke="#d4af37" strokeWidth="3" />
-      <polygon points="50,16 82,33 82,67 50,84 18,67 18,33"
-               fill="none" stroke="#2ecc71" strokeWidth="2" />
+               fill="#08120c" stroke="#4aff8a" strokeWidth="2" />
+      <polygon points="50,14 84,32 84,68 50,86 16,68 16,32"
+               fill="none" stroke="#ffb02e" strokeWidth="1.5" opacity=".8" />
       <path d="M50 30 L56 46 L73 46 L59 56 L64 72 L50 62 L36 72 L41 56 L27 46 L44 46 Z"
-            fill="#d4af37" />
+            fill="#4aff8a" opacity=".9" />
     </svg>
   );
 }
@@ -33,8 +34,8 @@ export default function Sidebar({ user }) {
       <div className="sidebar-brand">
         <Badge />
         <div>
-          <b>Sheriff</b>
-          <span>Dept. Portal</span>
+          <b>SHERIFF</b>
+          <span>DEPT. TERMINAL</span>
         </div>
       </div>
 
@@ -52,7 +53,7 @@ export default function Sidebar({ user }) {
       <nav className="sidebar-nav">
         <div
           className="nav-indicator"
-          style={{ transform: `translateY(${Math.max(activeIndex, 0) * 54}px)` }}
+          style={{ transform: `translateY(${Math.max(activeIndex, 0) * 46}px)` }}
         />
         {NAV.map((item) => (
           <Link
@@ -68,7 +69,8 @@ export default function Sidebar({ user }) {
 
       <div className="sidebar-footer">
         <span className="status-dot" />
-        <span>System Online</span>
+        <span>SYS.ONLINE</span>
+        <span className="cursor-blink" />
       </div>
     </aside>
   );
