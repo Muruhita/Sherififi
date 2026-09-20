@@ -14,23 +14,28 @@ export default function HomePage({ user }) {
   return (
     <Layout title="Главная" user={user}>
       <div className="page-head">
-        <span className="kicker">◉ Система активна</span>
-        <h1>Привет, <em>{user.globalName}</em></h1>
+        <span className="kicker">
+          <span className="dot-live" /> SYSTEM READY
+        </span>
+        <h1>
+          Welcome, <em>{user.globalName}</em>
+        </h1>
         <p>
-          Внутренний портал Департамента Шерифа. Все отправленные заявки
-          мгновенно уходят в Discord соответствующих подразделений.
+          Sheriff Department Internal Terminal. Все действия логируются.
+          Выберите раздел для продолжения работы.
+          <span className="cursor-blink" />
         </p>
       </div>
 
       <div className="forms-grid">
         <Link href="/forms" className="form-card">
-          <span className="tag">// Заявки</span>
-          <h3>Перейти к формам</h3>
-          <p>Список доступных форм: тестовая заявка и другие (скоро).</p>
+          <span className="tag">// FORMS</span>
+          <h3>Формы подачи</h3>
+          <p>Список доступных форм. Тестовая заявка и другие (скоро).</p>
         </Link>
         <Link href="/profile" className="form-card">
-          <span className="tag">// Личный кабинет</span>
-          <h3>Мой профиль</h3>
+          <span className="tag">// PROFILE</span>
+          <h3>Личный профиль</h3>
           <p>Данные Discord-аккаунта, статистика и история заявок.</p>
         </Link>
       </div>
