@@ -12,7 +12,7 @@ export async function getServerSideProps(ctx) {
 
 export default function HomePage({ user }) {
   return (
-    <Layout title="Главная" user={user}>
+    <Layout title="Home" user={user}>
       <div className="page-head">
         <span className="kicker">
           <span className="dot-live" /> SYSTEM READY
