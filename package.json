@@ -1,5 +1,5 @@
 {
-  "name": "sherififi-formsmur",
+  "name": "sherififi",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "next": "14.2.15",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "jsonwebtoken": "9.0.2"
   }
 }
