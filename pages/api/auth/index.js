@@ -36,7 +36,6 @@ async function handleCallback(req, res, code, state) {
   }
 
   try {
-    // 1. Обмениваем code на access_token
     const body = new URLSearchParams({
       client_id: process.env.DISCORD_CLIENT_ID,
       client_secret: process.env.DISCORD_CLIENT_SECRET,
@@ -57,7 +56,6 @@ async function handleCallback(req, res, code, state) {
     }
     const { access_token } = await tokenRes.json();
 
-    // 2. Получаем профиль пользователя
     const userRes = await fetch('https://discord.com/api/users/@me', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
@@ -68,7 +66,6 @@ async function handleCallback(req, res, code, state) {
     }
     const user = await userRes.json();
 
-    // 3. Сохраняем в сессию
     const session = {
       id: user.id,
       username: user.username,
