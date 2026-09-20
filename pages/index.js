@@ -1,15 +1,24 @@
 import Layout from '@/components/Layout';
 import Link from 'next/link';
+import { getSessionFromReq } from '@/lib/session';
 
-export default function HomePage() {
+export async function getServerSideProps(ctx) {
+  const session = getSessionFromReq(ctx.req);
+  if (!session) {
+    return { redirect: { destination: '/login', permanent: false } };
+  }
+  return { props: { user: session } };
+}
+
+export default function HomePage({ user }) {
   return (
-    <Layout title="Главная">
+    <Layout title="Главная" user={user}>
       <div className="page-head">
-        <span className="kicker">◉ System Online</span>
-        <h1>Портал <em>Департамента Шерифа</em></h1>
+        <span className="kicker">◉ Система активна</span>
+        <h1>Привет, <em>{user.globalName}</em></h1>
         <p>
-          Внутренняя система приёма заявок. Слева — рабочая зона, справа — навигация.
-          Все отправленные формы попадают в Discord соответствующих подразделений.
+          Внутренний портал Департамента Шерифа. Все отправленные заявки
+          мгновенно уходят в Discord соответствующих подразделений.
         </p>
       </div>
 
@@ -22,7 +31,7 @@ export default function HomePage() {
         <Link href="/profile" className="form-card">
           <span className="tag">// Личный кабинет</span>
           <h3>Мой профиль</h3>
-          <p>Данные бойца, статистика и история поданных заявок.</p>
+          <p>Данные Discord-аккаунта, статистика и история заявок.</p>
         </Link>
       </div>
     </Layout>
