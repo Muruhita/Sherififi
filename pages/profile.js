@@ -1,22 +1,36 @@
 import Layout from '@/components/Layout';
+import { getSessionFromReq, getAvatarUrl } from '@/lib/session';
 
-export default function ProfilePage() {
+export async function getServerSideProps(ctx) {
+  const session = getSessionFromReq(ctx.req);
+  if (!session) {
+    return { redirect: { destination: '/login', permanent: false } };
+  }
+  return {
+    props: {
+      user: session,
+      avatar: getAvatarUrl(session),
+    },
+  };
+}
+
+export default function ProfilePage({ user, avatar }) {
   return (
-    <Layout title="Профиль">
+    <Layout title="Профиль" user={user}>
       <div className="page-head">
         <span className="kicker">// Личный кабинет</span>
         <h1>Профиль <em>бойца</em></h1>
-        <p>Данные появятся после авторизации через Discord OAuth2.</p>
+        <p>Данные получены напрямую из Discord OAuth2.</p>
       </div>
 
       <div className="profile-card">
-        <div className="avatar">?</div>
+        <img className="avatar-img" src={avatar} alt={user.username} />
         <div className="profile-info">
-          <h2>Гость</h2>
-          <p>Войдите через Discord, чтобы увидеть свой профиль.</p>
+          <h2>{user.globalName}</h2>
+          <p>@{user.username}</p>
           <div className="row">
+            <span>Discord ID: <b>{user.id}</b></span>
             <span>Отдел: <b>—</b></span>
-            <span>Статик: <b>—</b></span>
             <span>Ранг: <b>—</b></span>
           </div>
         </div>
