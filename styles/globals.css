@@ -37,7 +37,7 @@ body{
   font-size:15px;
 }
 
-/* ---------- Фон: только сетка и мягкое свечение ---------- */
+/* ---------- Фон ---------- */
 .bg-grid{
   position:fixed;inset:0;z-index:-2;pointer-events:none;
   background-image:
@@ -63,10 +63,6 @@ body{
 .app-main{
   padding:40px 56px 80px;
   max-width:1000px;
-}
-@keyframes pageIn{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
 }
 
 /* ============================================================
@@ -241,6 +237,21 @@ body{
   );
 }
 
+/* Back link на странице формы */
+.back-link{
+  display:inline-block;
+  color:var(--phos-dim);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  transition:.2s;
+}
+.back-link:hover{
+  color:var(--phos);
+}
+
 /* ============================================================
    ПАНЕЛЬ ФОРМЫ
    ============================================================ */
@@ -251,16 +262,8 @@ body{
   position:relative;
   font-size:14px;
 }
-.form-panel::before{
-  content:'┌─[ FORM SHR-TEST ]─────────────────────────────────────┐';
-  display:block;
-  color:var(--phos-dim);
-  font-size:12px;
-  letter-spacing:1px;
-  margin:-20px 0 18px;
-  white-space:nowrap;
-  overflow:hidden;
-}
+
+/* Верхняя ASCII-рамка рендерится в JSX через .form-frame-top */
 .form-panel::after{
   content:'└───────────────────────────────────────────────────────┘';
   display:block;
@@ -268,6 +271,16 @@ body{
   font-size:12px;
   letter-spacing:1px;
   margin:18px 0 -20px;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+/* Верхняя рамка (заголовок подставляется из формы) */
+.form-frame-top{
+  color:var(--phos-dim);
+  font-size:12px;
+  letter-spacing:1px;
+  margin:-20px 0 18px;
   white-space:nowrap;
   overflow:hidden;
 }
@@ -324,6 +337,15 @@ body{
 }
 .err-msg::before{content:'!! '}
 
+/* Hint под полем */
+.hint{
+  font-size:10.5px;
+  letter-spacing:1px;
+  color:var(--phos-dim);
+  font-style:italic;
+}
+.hint::before{content:'# ';opacity:.6}
+
 .btn-submit{
   padding:13px 32px;border:1px solid var(--phos);
   cursor:pointer;font-family:inherit;
@@ -348,7 +370,7 @@ body{
 .status-msg.bad{color:var(--red)}
 
 /* ============================================================
-   КАРТОЧКИ ФОРМ НА ГЛАВНОЙ
+   КАРТОЧКИ ФОРМ
    ============================================================ */
 .forms-grid{
   display:grid;
@@ -626,26 +648,3 @@ body{
   .profile-info .row{justify-content:center}
   .page-head h1{font-size:24px;letter-spacing:1.5px}
 }
-/* ===== Back link на странице формы ===== */
-   .back-link{
-     display:inline-block;
-     color:var(--phos-dim);
-     text-decoration:none;
-     font-size:12px;
-     letter-spacing:2px;
-     text-transform:uppercase;
-     margin-bottom:16px;
-     transition:.2s;
-}
-   .back-link:hover{
-     color:var(--phos);
-}
-
-/* ===== Hint под полем ===== */
-   .hint{
-     font-size:10.5px;
-     letter-spacing:1px;
-     color:var(--phos-dim);
-     font-style:italic;
-}
-   .hint::before{content:'# ';opacity:.6}
