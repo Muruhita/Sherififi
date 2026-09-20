@@ -626,3 +626,26 @@ body{
   .profile-info .row{justify-content:center}
   .page-head h1{font-size:24px;letter-spacing:1.5px}
 }
+/* ===== Back link на странице формы ===== */
+   .back-link{
+     display:inline-block;
+     color:var(--phos-dim);
+     text-decoration:none;
+     font-size:12px;
+     letter-spacing:2px;
+     text-transform:uppercase;
+     margin-bottom:16px;
+     transition:.2s;
+}
+   .back-link:hover{
+     color:var(--phos);
+}
+
+/* ===== Hint под полем ===== */
+   .hint{
+     font-size:10.5px;
+     letter-spacing:1px;
+     color:var(--phos-dim);
+     font-style:italic;
+}
+   .hint::before{content:'# ';opacity:.6}
