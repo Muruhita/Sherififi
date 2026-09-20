@@ -7,7 +7,8 @@ const EMPTY = { nameStatic: '', reason: '', department: '' };
 export default function TestForm() {
   const [form, setForm] = useState(EMPTY);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | ok | error
+  const [status, setStatus] = useState('idle');
+  const [serverError, setServerError] = useState('');
 
   const set = (k) => (e) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -27,19 +28,25 @@ export default function TestForm() {
     e.preventDefault();
     if (!validate()) return;
     setStatus('sending');
+    setServerError('');
     try {
       const r = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ formType: 'test', data: form }),
       });
-      if (!r.ok) throw new Error('failed');
+      if (!r.ok) {
+        const j = await r.json().catch(() => ({}));
+        throw new Error(j.error || `HTTP ${r.status}`);
+      }
       setStatus('ok');
       setForm(EMPTY);
       setTimeout(() => setStatus('idle'), 4000);
-    } catch {
+    } catch (err) {
+      console.error('Submit failed:', err);
+      setServerError(err.message);
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 4000);
+      setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
@@ -56,7 +63,7 @@ export default function TestForm() {
           onChange={set('nameStatic')}
           placeholder="Иван Иванов | 12345"
         />
-        {errors.nameStatic && <span className="err-msg">⚠ {errors.nameStatic}</span>}
+        {errors.nameStatic && <span className="err-msg">{errors.nameStatic}</span>}
       </div>
 
       <div className={`form-field${errors.reason ? ' err' : ''}`}>
@@ -66,7 +73,7 @@ export default function TestForm() {
           onChange={set('reason')}
           placeholder="Опишите причину или вставьте ссылку на вашу работу..."
         />
-        {errors.reason && <span className="err-msg">⚠ {errors.reason}</span>}
+        {errors.reason && <span className="err-msg">{errors.reason}</span>}
       </div>
 
       <div className={`form-field${errors.department ? ' err' : ''}`}>
@@ -75,15 +82,19 @@ export default function TestForm() {
           <option value="">— Выберите отдел —</option>
           {DEPARTMENTS.map((d) => <option key={d} value={d}>{d}</option>)}
         </select>
-        {errors.department && <span className="err-msg">⚠ {errors.department}</span>}
+        {errors.department && <span className="err-msg">{errors.department}</span>}
       </div>
 
       <button type="submit" className="btn-submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Отправка...' : 'Отправить заявку →'}
+        {status === 'sending' ? 'Отправка...' : 'Отправить заявку'}
       </button>
 
-      {status === 'ok'    && <div className="status-msg ok">✓ Заявка успешно отправлена</div>}
-      {status === 'error' && <div className="status-msg bad">✕ Не удалось отправить, попробуйте снова</div>}
+      {status === 'ok' && (
+        <div className="status-msg ok">OK :: заявка отправлена</div>
+      )}
+      {status === 'error' && (
+        <div className="status-msg bad">ERR :: {serverError || 'не удалось отправить'}</div>
+      )}
     </form>
   );
 }
