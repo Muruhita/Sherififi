@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { getAvatarUrl } from '@/lib/session';
 
 const NAV = [
   { href: '/',        label: 'Главная', icon: '⌂' },
@@ -20,11 +21,12 @@ function Badge() {
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
   const router = useRouter();
   const activeIndex = NAV.findIndex(n =>
     n.href === '/' ? router.pathname === '/' : router.pathname.startsWith(n.href)
   );
+  const avatar = user ? getAvatarUrl(user) : null;
 
   return (
     <aside className="sidebar">
@@ -35,6 +37,17 @@ export default function Sidebar() {
           <span>Dept. Portal</span>
         </div>
       </div>
+
+      {user && (
+        <div className="user-chip">
+          <img className="user-avatar" src={avatar} alt={user.username} />
+          <div className="user-meta">
+            <b>{user.globalName}</b>
+            <span>@{user.username}</span>
+          </div>
+          <a href="/api/logout" className="logout-btn" title="Выйти">⏻</a>
+        </div>
+      )}
 
       <nav className="sidebar-nav">
         <div
