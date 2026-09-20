@@ -12,11 +12,17 @@ export async function getServerSideProps(ctx) {
 
 export default function FormsPage({ user }) {
   return (
-    <Layout title="Формы" user={user}>
+    <Layout title="Forms" user={user}>
       <div className="page-head">
-        <span className="kicker">// Формы подачи</span>
+        <span className="kicker">
+          <span className="dot-live" /> FORMS MODULE · ACTIVE
+        </span>
         <h1>Форма <em>«Тест»</em></h1>
-        <p>Заполните поля ниже — заявка моментально уйдёт в Discord департамента.</p>
+        <p>
+          Заполните поля ниже — заявка моментально уйдёт в Discord департамента.
+          Все действия логируются в системе.
+          <span className="cursor-blink" />
+        </p>
       </div>
 
       <TestForm />
